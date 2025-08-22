@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
-  const corsOrigins = configService.get<string>('CORS_ORIGIN')?.split(',');
+  const corsOrigins = configService.get<string>('CORS_ORIGIN')?.split(',').map(origin => origin.trim());
   const port = configService.get<number>('PORT') || 3000;
 
   app.enableCors({
@@ -17,6 +17,6 @@ async function bootstrap() {
   });
 
   await app.listen(port);
-  console.log(`NestJS server running on http://localhost:${port} with CORS enabled`);
+  console.log(`NestJS server running on  port ${port} with CORS enabled`);
 }
 bootstrap();
